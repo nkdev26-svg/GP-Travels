@@ -12,7 +12,8 @@ import {
     DollarSign,
     CheckCircle2,
     Upload,
-    Link as LinkIcon
+    Link as LinkIcon,
+    AlertCircle
 } from 'lucide-react';
 import { Tour } from '@prisma/client';
 import { createTour, updateTour } from '@/lib/actions';
@@ -26,6 +27,7 @@ export default function TourForm({ tour }: TourFormProps) {
     const isEditing = !!tour;
     const [loading, setLoading] = useState(false);
     const [uploadMode, setUploadMode] = useState<'url' | 'file'>('file');
+    const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
     const router = useRouter();
 
     const [previewUrl, setPreviewUrl] = useState(tour?.image || "");
@@ -51,14 +53,20 @@ export default function TourForm({ tour }: TourFormProps) {
 
     async function handleSubmit(formData: FormData) {
         setLoading(true);
+        setStatus(null);
         try {
             if (isEditing) {
                 await updateTour(tour.id, formData);
+                setStatus({ type: 'success', message: 'Tour updated successfully!' });
             } else {
                 await createTour(formData);
+                setStatus({ type: 'success', message: 'Tour created successfully!' });
             }
-        } catch (error) {
+            // Optional: redirect or clear form after delay
+            setTimeout(() => setStatus(null), 5000);
+        } catch (error: any) {
             console.error(error);
+            setStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' });
         } finally {
             setLoading(false);
         }
@@ -258,6 +266,17 @@ export default function TourForm({ tour }: TourFormProps) {
                                 </p>
                             </div>
                         </div>
+                        
+                        {/* Status Messages */}
+                        {status && (
+                            <div className={cn(
+                                "mt-6 p-4 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300",
+                                status.type === 'success' ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-500" : "bg-red-500/10 border border-red-500/20 text-red-500"
+                            )}>
+                                {status.type === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                                <p className="text-sm font-bold">{status.message}</p>
+                            </div>
+                        )}
 
                         <div className="mt-8 pt-8 border-t border-white/5 space-y-4">
                             <Button

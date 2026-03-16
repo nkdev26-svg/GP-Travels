@@ -25,7 +25,7 @@ export default function AboutPage() {
                     <div className="relative">
                         <div className="aspect-[4/5] rounded-[3rem] overflow-hidden">
                             <Image
-                                src="/placeholder-about.jpg"
+                                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1974&auto=format&fit=crop"
                                 alt="Our Team in the field"
                                 width={1974}
                                 height={1000}
@@ -118,10 +118,10 @@ export default function AboutPage() {
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
                         {[
-                            "/placeholder-journey-1.jpg",
-                            "/placeholder-journey-2.jpg",
-                            "/placeholder-journey-3.jpg",
-                            "/placeholder-journey-4.jpg"
+                            "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2070&auto=format&fit=crop",
+                            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",
+                            "https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?q=80&w=2070&auto=format&fit=crop",
+                            "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=2070&auto=format&fit=crop"
                         ].map((src, i) => (
                             <motion.div 
                                 key={i} 

@@ -84,7 +84,7 @@ export const WhyChooseUs = () => {
                     >
                         <div className="aspect-square relative rounded-[3rem] overflow-hidden">
                             <img
-                                src="/placeholder-why.jpg"
+                                src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2070&auto=format&fit=crop"
                                 alt="Happy Travelers"
                                 className="object-cover w-full h-full"
                             />

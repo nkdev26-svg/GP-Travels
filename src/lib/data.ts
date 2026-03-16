@@ -66,14 +66,14 @@ export const TESTIMONIALS: Testimonial[] = [
         name: "John Doe",
         role: "Adventure Enthusiast",
         content: "The Swiss Alps tour was absolutely incredible. The guides were professional and the views were unmatched!",
-        image: "/placeholder-avatar.jpg",
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
     },
     {
         id: "2",
         name: "Sarah Smith",
         role: "Solo Traveler",
         content: "I felt so safe and well-taken care of during my trip to Bali. Highly recommend this agency for solo travelers.",
-        image: "/placeholder-avatar.jpg",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop",
     },
 ];
 

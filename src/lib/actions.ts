@@ -39,7 +39,7 @@ const TestimonialSchema = z.object({
 const CarSchema = z.object({
     name: z.string().min(2, "Car name is required"),
     details: z.string().min(10, "Details must be at least 10 characters"),
-    hourlyPrice: z.string().optional(),
+    hourlyPrice: z.string().optional().nullable(),
 });
 
 // --- Helper Functions ---

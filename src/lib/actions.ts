@@ -167,12 +167,15 @@ export async function updateTour(id: string, formData: FormData) {
         imageUrl = await saveFile(imageFile);
     }
 
+    // If no new image was provided (either file or URL), we keep the old one
+    const updateData: any = { ...validated };
+    if (imageUrl) {
+        updateData.image = imageUrl;
+    }
+
     await prisma.tour.update({
         where: { id },
-        data: {
-            ...validated,
-            image: imageUrl,
-        },
+        data: updateData,
     });
 
     revalidatePath("/admin/tours");
@@ -350,12 +353,14 @@ export async function updateCar(id: string, formData: FormData) {
         imageUrl = await saveFile(imageFile);
     }
 
+    const updateData: any = { ...validated };
+    if (imageUrl) {
+        updateData.image = imageUrl;
+    }
+
     await prisma.car.update({
         where: { id },
-        data: {
-            ...validated,
-            image: imageUrl,
-        },
+        data: updateData,
     });
 
     revalidatePath("/admin/cars");

@@ -21,7 +21,7 @@ export const HeroSection = ({ settings }: HeroSectionProps) => {
             {/* Background with overlay */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+                    src={settings.heroImage || "/placeholder-hero.jpg"}
                     alt="Travel Background"
                     fill
                     className="object-cover scale-105"

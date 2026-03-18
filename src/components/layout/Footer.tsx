@@ -1,13 +1,14 @@
+
 import React from 'react';
 import Link from 'next/link';
 import { MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
 import { CONTACT_INFO } from '@/lib/data';
+import { getSiteSettings } from '@/lib/settings';
 
-interface FooterProps {
-    settings: Record<string, string>;
-}
-
-export const Footer = ({ settings }: FooterProps) => {
+export const Footer = async () => {
+    // Independent fetch for footer settings
+    const settings = await getSiteSettings();
+    
     const contact = {
         address: settings.address || CONTACT_INFO.address,
         phone: settings.phone || CONTACT_INFO.phone,

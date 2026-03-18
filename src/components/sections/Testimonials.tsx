@@ -100,14 +100,28 @@ export const Testimonials = ({ testimonials }: TestimonialsProps) => {
                                     "{current.content}"
                                 </p>
                                 <div className="flex items-center gap-5 mt-auto">
-                                    {current.image && (
-                                        <div className="w-16 h-16 relative rounded-2xl overflow-hidden shadow-xl">
+                                    {current.image ? (
+                                        <div className="w-16 h-16 relative rounded-2xl overflow-hidden shadow-xl bg-slate-100 dark:bg-slate-800">
                                             <Image
                                                 src={current.image}
                                                 alt={current.name}
                                                 fill
                                                 className="object-cover"
+                                                sizes="64px"
+                                                onError={(e) => {
+                                                    // Fallback for broken images (e.g. old local /uploads/)
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.style.display = 'none';
+                                                    const parent = target.parentElement;
+                                                    if (parent) {
+                                                        parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
+                                                    }
+                                                }}
                                             />
+                                        </div>
+                                    ) : (
+                                        <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-xl">
+                                            <Star className="w-8 h-8 opacity-20" />
                                         </div>
                                     )}
                                     <div>

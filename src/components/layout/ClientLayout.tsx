@@ -1,16 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingContactButtons } from "@/components/ui/FloatingContactButtons";
 
 export default function ClientLayout({
     children,
-    settings
+    navbar,
+    footer
 }: {
     children: React.ReactNode,
-    settings: Record<string, string>
+    navbar: React.ReactNode,
+    footer: React.ReactNode
 }) {
     const pathname = usePathname();
 
@@ -21,10 +20,11 @@ export default function ClientLayout({
 
     return (
         <>
-            {!shouldHide && <Navbar settings={settings} />}
+            {!shouldHide && navbar}
+            
             {children}
-            {!shouldHide && <Footer settings={settings} />}
-            {!shouldHide && <FloatingContactButtons settings={settings} />}
+            
+            {!shouldHide && footer}
         </>
     );
 }

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "./db";
 import { writeFile, mkdir } from "fs/promises";
@@ -30,11 +30,16 @@ const InquirySchema = z.object({
 });
 
 const TestimonialSchema = z.object({
-    name: z.string().min(2, "Name is required"),
-    role: z.string().min(2, "Role is required"),
-    content: z.string().min(10, "Content must be at least 10 characters"),
-    rating: z.number().min(1).max(5).default(5),
+    name: z.string().min(1, "Name is required"),
+    role: z.string().optional().default("Verified Traveler"),
+    content: z.string().min(2, "Review must be at least 2 characters"),
+    rating: z.coerce.number().min(1).max(5).default(5),
 });
+
+// Helper to check for redirect errors
+function isRedirect(error: any) {
+    return error && error.digest && error.digest.startsWith('NEXT_REDIRECT');
+}
 
 const CarSchema = z.object({
     name: z.string().min(2, "Car name is required"),
@@ -65,7 +70,6 @@ async function saveFile(file: File): Promise<string> {
     }
 
     // --- Production Fix: Supabase Storage Support ---
-    // Using Supabase for free cloud storage instead of Cloudinary or local disk.
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
         try {
             const bytes = await file.arrayBuffer();
@@ -79,7 +83,10 @@ async function saveFile(file: File): Promise<string> {
                     upsert: true
                 });
 
-            if (error) throw error;
+            if (error) {
+                console.error("Supabase Storage Error Details:", error);
+                throw new Error(`Supabase Upload Failed: ${error.message} (Check if your bucket "uploads" is set to Public and your ANON Key is correct)`);
+            }
 
             // Get the public URL for the uploaded file
             const { data: { publicUrl } } = supabase.storage
@@ -87,12 +94,21 @@ async function saveFile(file: File): Promise<string> {
                 .getPublicUrl(filename);
 
             return publicUrl;
-        } catch (error) {
-            console.error("Supabase upload failed, falling back to local:", error);
+        } catch (error: any) {
+            console.error("Supabase storage error:", error);
+            // In production, we MUST use cloud storage. Fallback to local only in dev if Supabase fails.
+            if (process.env.NODE_ENV === 'production') {
+                throw new Error(`Cloud storage upload failed: ${error.message || 'Unknown error'}`);
+            }
         }
     }
 
     // Fallback/Local Development: Save to public/uploads
+    // NOTE: This will not work on Vercel deployment!
+    if (process.env.NODE_ENV === 'production') {
+        throw new Error("Storage configuration missing. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in Vercel.");
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -258,33 +274,50 @@ export async function updateSiteSettings(settings: Record<string, string>) {
 }
 
 export async function createTestimonial(formData: FormData) {
-    await checkAuth();
+    try {
+        await checkAuth();
 
-    const data = {
-        name: formData.get("name") as string,
-        role: formData.get("role") as string,
-        content: formData.get("content") as string,
-        rating: parseInt(formData.get("rating") as string) || 5,
-    };
+        const rawData = {
+            name: formData.get("name")?.toString() || "",
+            role: formData.get("role")?.toString() || "Verified Traveler",
+            content: formData.get("content")?.toString() || "",
+            rating: formData.get("rating"),
+        };
 
-    const validated = TestimonialSchema.parse(data);
-
-    let imageUrl = formData.get("image-url") as string;
-    const imageFile = formData.get("image-file") as File;
-
-    if (imageFile && imageFile.size > 0) {
-        imageUrl = await saveFile(imageFile);
-    }
-
-    await prisma.testimonial.create({
-        data: {
-            ...validated,
-            image: imageUrl || "/placeholder-avatar.jpg"
+        const result = TestimonialSchema.safeParse(rawData);
+        if (!result.success) {
+            return { success: false, error: result.error.issues[0].message };
         }
-    });
 
-    revalidatePath("/");
-    revalidatePath("/admin/testimonials");
+        const validated = result.data;
+        let imageUrl = null;
+        const imageFile = formData.get("image-file");
+
+        if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+            imageUrl = await saveFile(imageFile);
+        }
+
+        await prisma.testimonial.create({
+            data: {
+                name: validated.name,
+                role: validated.role,
+                content: validated.content,
+                rating: validated.rating,
+                image: imageUrl
+            }
+        });
+
+        revalidatePath("/");
+        revalidatePath("/admin/testimonials");
+        
+        return { success: true };
+    } catch (error: any) {
+        console.error("Testimonial creation error:", error);
+        return { 
+            success: false, 
+            error: error.message || "An unexpected error occurred. Please check your storage settings." 
+        };
+    }
 }
 
 export async function deleteTestimonial(id: string) {

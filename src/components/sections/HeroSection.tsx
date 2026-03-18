@@ -32,27 +32,20 @@ export const HeroSection = ({ settings }: HeroSectionProps) => {
                     priority
                 />
                 
-                {/* Mobile: Full Visibility Mode (No Zoom, No Crop) */}
-                <div className="md:hidden relative w-full h-full flex items-center justify-center bg-slate-950">
-                    <img 
+                {/* Mobile: Focused Aspect (No Zoom, Full Visibility centered on Van) */}
+                <div className="md:hidden absolute inset-0 bg-slate-950">
+                    <Image
                         src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
-                        alt="Mobile Travel Background"
-                        className="w-full h-auto object-contain scale-100"
+                        alt="Travel Background Mobile"
+                        fill
+                        className="object-cover object-[15%_bottom] scale-125"
+                        priority
                     />
-                    {/* Atmospheric background for mobile to bridge the gaps */}
-                    <div className="absolute inset-0 z-[-1] opacity-30">
-                        <Image
-                            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
-                            alt=""
-                            fill
-                            className="object-cover blur-2xl"
-                        />
-                    </div>
                 </div>
 
                 {/* Overlays for legibility */}
-                <div className="absolute inset-0 bg-slate-950/40" />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950" />
+                <div className="absolute inset-0 bg-slate-950/50" />
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-slate-950" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10">

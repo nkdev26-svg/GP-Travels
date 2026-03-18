@@ -19,16 +19,33 @@ export const HeroSection = ({ settings }: HeroSectionProps) => {
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 gpu-boost">
             {/* Background with overlay */}
-            <div className="absolute inset-0 z-0">
+            {/* Full Image Background with high-fidelity filling */}
+            <div className="absolute inset-0 z-0 bg-slate-950">
+                {/* Background Blur layer to fill the screen without cutting the main image */}
+                <Image
+                    src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+                    alt=""
+                    fill
+                    className="object-cover blur-3xl opacity-40 scale-110"
+                    priority
+                />
                 <Image
                     src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
                     alt="Travel Background"
                     fill
-                    className="object-cover object-[75%_center] md:object-center scale-100 transition-opacity duration-700"
+                    className="hidden md:block object-cover scale-100 transition-opacity duration-700"
                     sizes="100vw"
                     priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-background" />
+                {/* Mobile-only: Full image containment */}
+                <div className="md:hidden absolute inset-0 flex items-center justify-center p-0">
+                    <img 
+                        src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop" 
+                        alt="Travel Background Mobile" 
+                        className="w-full h-auto max-h-[100vh] object-contain"
+                    />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/40 to-background" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10">

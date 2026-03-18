@@ -21,13 +21,13 @@ import { LogoutButton } from '@/components/ui/LogoutButton';
 import { useState } from 'react';
 
 const ADMIN_LINKS = [
-    { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    { name: 'Manage Tours', href: '/admin/tours', icon: MapPin },
-    { name: 'Manage Cars', href: '/admin/cars', icon: Car },
-    { name: 'Customer Inquiries', href: '/admin/inquiries', icon: MessageSquare },
-    { name: 'Testimonials', href: '/admin/testimonials', icon: Star },
-    { name: 'Site Settings', href: '/admin/settings', icon: Globe },
-    { name: 'Security (2FA)', href: '/admin/security', icon: Settings },
+    { name: 'Dashboard', href: '/gp-portal-2026', icon: LayoutDashboard },
+    { name: 'Manage Tours', href: '/gp-portal-2026/tours', icon: MapPin },
+    { name: 'Manage Cars', href: '/gp-portal-2026/cars', icon: Car },
+    { name: 'Customer Inquiries', href: '/gp-portal-2026/inquiries', icon: MessageSquare },
+    { name: 'Testimonials', href: '/gp-portal-2026/testimonials', icon: Star },
+    { name: 'Site Settings', href: '/gp-portal-2026/settings', icon: Globe },
+    { name: 'Security (2FA)', href: '/gp-portal-2026/security', icon: Settings },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -114,7 +114,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             {(() => {
                                 const segments = pathname.split('/').filter(Boolean);
                                 const last = segments[segments.length - 1];
-                                if (!last || last === 'admin') return 'Dashboard';
+                                if (!last || last === 'gp-portal-2026') return 'Dashboard';
                                 
                                 // Handling Tours
                                 if (segments.includes('tours')) {

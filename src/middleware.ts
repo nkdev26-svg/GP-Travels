@@ -6,8 +6,8 @@ export async function middleware(req: NextRequest) {
     const token = await getToken({ req });
     const url = req.nextUrl.pathname;
 
-    // Block access to /admin if not logged in or not an admin
-    if (url.startsWith("/admin")) {
+    // Block access to /gp-portal-2026 if not logged in or not an admin
+    if (url.startsWith("/gp-portal-2026")) {
         if (!token || token.role !== "admin") {
             return NextResponse.redirect(new URL("/login", req.url));
         }
@@ -17,5 +17,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/admin/:path*"],
+    matcher: ["/gp-portal-2026/:path*"],
 };

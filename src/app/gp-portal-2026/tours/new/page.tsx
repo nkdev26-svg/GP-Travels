@@ -8,7 +8,7 @@ export default function NewTourPage() {
         <div className="space-y-10 pb-20">
             <div className="space-y-4">
                 <Link
-                    href="/admin/tours"
+                    href="/gp-portal-2026/tours"
                     className="inline-flex items-center gap-2 text-slate-500 hover:text-primary font-bold text-xs uppercase tracking-widest transition-colors mb-2"
                 >
                     <ChevronLeft className="w-4 h-4" />

@@ -156,10 +156,10 @@ export async function createTour(formData: FormData) {
         },
     });
 
-    revalidatePath("/admin/tours");
+    revalidatePath("/gp-portal-2026/tours");
     revalidatePath("/tours");
     revalidatePath("/");
-    redirect("/admin/tours");
+    redirect("/gp-portal-2026/tours");
 }
 
 export async function updateTour(id: string, formData: FormData) {
@@ -194,11 +194,11 @@ export async function updateTour(id: string, formData: FormData) {
         data: updateData,
     });
 
-    revalidatePath("/admin/tours");
-    revalidatePath(`/admin/tours/${id}`);
+    revalidatePath("/gp-portal-2026/tours");
+    revalidatePath(`/gp-portal-2026/tours/${id}`);
     revalidatePath("/tours");
     revalidatePath("/");
-    redirect("/admin/tours");
+    redirect("/gp-portal-2026/tours");
 }
 
 export async function deleteTour(id: string) {
@@ -207,7 +207,7 @@ export async function deleteTour(id: string) {
         where: { id },
     });
     await logAdminAction("Delete Tour", { id });
-    revalidatePath("/admin/tours");
+    revalidatePath("/gp-portal-2026/tours");
     revalidatePath("/tours");
     revalidatePath("/");
 }
@@ -229,7 +229,7 @@ export async function createInquiry(formData: FormData) {
         await prisma.inquiry.create({
             data: result.data,
         });
-        revalidatePath("/admin");
+        revalidatePath("/gp-portal-2026");
         return { success: true };
     } catch (e) {
         return { success: false, error: "Something went wrong. Please try again." };
@@ -245,7 +245,7 @@ export async function logContactClick(type: 'whatsapp' | 'phone', location: stri
             status: "clicked", // special status to differentiate from form submissions
         }
     });
-    revalidatePath("/admin");
+    revalidatePath("/gp-portal-2026");
 }
 
 export async function deleteInquiry(id: string) {
@@ -253,8 +253,8 @@ export async function deleteInquiry(id: string) {
     await prisma.inquiry.delete({
         where: { id },
     });
-    revalidatePath("/admin/inquiries");
-    revalidatePath("/admin");
+    revalidatePath("/gp-portal-2026/inquiries");
+    revalidatePath("/gp-portal-2026");
 }
 
 export async function updateSiteSettings(settings: Record<string, string>) {
@@ -308,7 +308,7 @@ export async function createTestimonial(formData: FormData) {
         });
 
         revalidatePath("/");
-        revalidatePath("/admin/testimonials");
+        revalidatePath("/gp-portal-2026/testimonials");
         
         return { success: true };
     } catch (error: any) {
@@ -327,7 +327,7 @@ export async function deleteTestimonial(id: string) {
         where: { id }
     });
     revalidatePath("/");
-    revalidatePath("/admin/testimonials");
+    revalidatePath("/gp-portal-2026/testimonials");
 }
 
 export async function logAdminAction(action: string, details: Record<string, any>) {
@@ -362,10 +362,10 @@ export async function createCar(formData: FormData) {
         },
     });
 
-    revalidatePath("/admin/cars");
+    revalidatePath("/gp-portal-2026/cars");
     revalidatePath("/cars");
     revalidatePath("/");
-    redirect("/admin/cars");
+    redirect("/gp-portal-2026/cars");
 }
 
 export async function updateCar(id: string, formData: FormData) {
@@ -396,10 +396,10 @@ export async function updateCar(id: string, formData: FormData) {
         data: updateData,
     });
 
-    revalidatePath("/admin/cars");
+    revalidatePath("/gp-portal-2026/cars");
     revalidatePath("/cars");
     revalidatePath("/");
-    redirect("/admin/cars");
+    redirect("/gp-portal-2026/cars");
 }
 
 export async function deleteCar(id: string) {
@@ -408,7 +408,7 @@ export async function deleteCar(id: string) {
         where: { id },
     });
     await logAdminAction("Delete Car", { id });
-    revalidatePath("/admin/cars");
+    revalidatePath("/gp-portal-2026/cars");
     revalidatePath("/cars");
     revalidatePath("/");
 }

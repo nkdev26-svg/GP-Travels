@@ -32,7 +32,7 @@ export default async function TestimonialsPage({
                     <h2 className="text-3xl font-black tracking-tight text-white mb-2">Customer Testimonials</h2>
                     <p className="text-slate-400">Manage real customer reviews shown on the home page.</p>
                 </div>
-                <Button href="/admin/testimonials/new" className="gap-2">
+                <Button href="/gp-portal-2026/testimonials/new" className="gap-2">
                     <PlusCircle className="w-5 h-5" />
                     Add Testimonial
                 </Button>
@@ -96,7 +96,7 @@ export default async function TestimonialsPage({
             {totalPages > 1 && (
                 <div className="flex items-center justify-center gap-6 pt-12">
                     <Button
-                        href={`/admin/testimonials?page=${page - 1}`}
+                        href={`/gp-portal-2026/testimonials?page=${page - 1}`}
                         variant="outline"
                         disabled={page <= 1}
                         className="rounded-full w-12 h-12 p-0 border-white/10"
@@ -108,7 +108,7 @@ export default async function TestimonialsPage({
                         {[...Array(totalPages)].map((_, i) => (
                             <Link
                                 key={i}
-                                href={`/admin/testimonials?page=${i + 1}`}
+                                href={`/gp-portal-2026/testimonials?page=${i + 1}`}
                                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${page === i + 1
                                         ? 'bg-primary text-white'
                                         : 'text-slate-400 hover:bg-white/5'
@@ -120,7 +120,7 @@ export default async function TestimonialsPage({
                     </div>
 
                     <Button
-                        href={`/admin/testimonials?page=${page + 1}`}
+                        href={`/gp-portal-2026/testimonials?page=${page + 1}`}
                         variant="outline"
                         disabled={page >= totalPages}
                         className="rounded-full w-12 h-12 p-0 border-white/10"

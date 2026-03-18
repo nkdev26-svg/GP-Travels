@@ -36,7 +36,7 @@ export default function LoginPage() {
                     setError(result.error);
                 }
             } else {
-                router.push("/admin");
+                router.push("/gp-portal-2026");
                 router.refresh();
             }
         } catch (err) {

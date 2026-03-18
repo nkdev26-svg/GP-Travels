@@ -45,7 +45,7 @@ export async function enable2FA(secret: string, token: string) {
         data: { twoFactorSecret: secret },
     });
 
-    revalidatePath("/admin/security");
+    revalidatePath("/gp-portal-2026/security");
     return { success: true };
 }
 
@@ -59,7 +59,7 @@ export async function disable2FA() {
         data: { twoFactorSecret: null },
     });
 
-    revalidatePath("/admin/security");
+    revalidatePath("/gp-portal-2026/security");
     return { success: true };
 }
 

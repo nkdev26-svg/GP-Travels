@@ -40,7 +40,7 @@ export default async function ManageToursPage({
                     <h1 className="text-4xl font-black text-white tracking-tight mb-2">Manage Tours</h1>
                     <p className="text-slate-400">View, edit, and manage all your travel packages.</p>
                 </div>
-                <Button href="/admin/tours/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
+                <Button href="/gp-portal-2026/tours/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
                     <Plus className="w-6 h-6" />
                     Add New Tour
                 </Button>
@@ -110,7 +110,7 @@ export default async function ManageToursPage({
                                     <td className="p-6 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <Link
-                                                href={`/admin/tours/${tour.id}`}
+                                                href={`/gp-portal-2026/tours/${tour.id}`}
                                                 className="p-2.5 rounded-xl bg-white/5 text-slate-400 hover:text-primary hover:bg-primary/10 transition-all"
                                                 title="Edit"
                                             >
@@ -167,7 +167,7 @@ export default async function ManageToursPage({
                             </span>
                             <div className="flex items-center gap-2">
                                 <Link
-                                    href={`/admin/tours/${tour.id}`}
+                                    href={`/gp-portal-2026/tours/${tour.id}`}
                                     className="p-3 rounded-2xl bg-white/5 text-slate-400 hover:text-primary transition-all pr-4"
                                 >
                                     <Edit2 className="w-5 h-5" />
@@ -188,7 +188,7 @@ export default async function ManageToursPage({
                         <p className="text-slate-500 max-w-xs mx-auto mb-8">
                             Your tour catalog is empty. Start by creating your first travel package.
                         </p>
-                        <Button href="/admin/tours/new" variant="outline" className="h-12 border-primary/20 text-primary">
+                        <Button href="/gp-portal-2026/tours/new" variant="outline" className="h-12 border-primary/20 text-primary">
                             Create First Tour
                         </Button>
                     </div>

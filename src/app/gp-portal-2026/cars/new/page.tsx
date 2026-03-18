@@ -8,7 +8,7 @@ export default function NewCarPage() {
         <div className="space-y-8">
             <div className="flex flex-col gap-4">
                 <Link 
-                    href="/admin/cars" 
+                    href="/gp-portal-2026/cars" 
                     className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest"
                 >
                     <ChevronLeft className="w-4 h-4" />

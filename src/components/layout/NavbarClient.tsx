@@ -74,7 +74,7 @@ export const NavbarClient = ({ settings }: { settings: Record<string, string> })
                             <div className="h-6 w-px bg-border/20 mx-2" />
                             <div className="flex items-center gap-6">
                                 <Link
-                                    href="/admin"
+                                    href="/gp-portal-2026"
                                     className="text-sm font-bold text-primary flex items-center gap-2 hover:opacity-80 transition-opacity"
                                 >
                                     <LayoutDashboard className="w-4 h-4" />
@@ -141,7 +141,7 @@ export const NavbarClient = ({ settings }: { settings: Record<string, string> })
                     {session && (
                         <div className="flex flex-col gap-3 py-4 border-y border-slate-200/50 dark:border-white/5">
                             <Link
-                                href="/admin"
+                                href="/gp-portal-2026"
                                 className="h-14 flex items-center justify-center gap-3 rounded-2xl bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-[0.2em] transition-all hover:bg-primary/20"
                                 onClick={() => setIsOpen(false)}
                             >

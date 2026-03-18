@@ -39,7 +39,7 @@ export default function NewTestimonialPage() {
                 // We use router.refresh first to clear cache
                 router.refresh(); 
                 setTimeout(() => {
-                    router.push("/admin/testimonials");
+                    router.push("/gp-portal-2026/testimonials");
                 }, 1000);
             } else {
                 setError(result.error || "An error occurred while saving.");
@@ -55,7 +55,7 @@ export default function NewTestimonialPage() {
     return (
         <div className="max-w-4xl mx-auto space-y-6 pb-20">
             <Link 
-                href="/admin/testimonials" 
+                href="/gp-portal-2026/testimonials" 
                 className="inline-flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-medium mb-4"
             >
                 <ChevronLeft className="w-4 h-4" />
@@ -167,7 +167,7 @@ export default function NewTestimonialPage() {
                 </div>
 
                 <div className="flex justify-end gap-3 items-center pt-4">
-                    <Link href="/admin/testimonials" className="px-6 text-slate-500 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs">
+                    <Link href="/gp-portal-2026/testimonials" className="px-6 text-slate-500 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs">
                         Cancel
                     </Link>
                     <Button 

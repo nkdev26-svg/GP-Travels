@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
                     <p className="text-slate-400">Welcome back, manager. Here's what's happening today.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <Button href="/admin/tours/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
+                    <Button href="/gp-portal-2026/tours/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
                         <Plus className="w-6 h-6" />
                         Create New Tour
                     </Button>
@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
                 <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] backdrop-blur-xl overflow-hidden flex flex-col">
                     <div className="p-8 border-b border-white/5 flex items-center justify-between">
                         <h2 className="text-xl font-bold text-white">Recently Added Tours</h2>
-                        <Link href="/admin/tours" className="text-primary text-sm font-semibold hover:underline">View All</Link>
+                        <Link href="/gp-portal-2026/tours" className="text-primary text-sm font-semibold hover:underline">View All</Link>
                     </div>
                     <div className="divide-y divide-white/5 flex-grow">
                         {recentTours.length > 0 ? recentTours.map((tour) => (
@@ -91,7 +91,7 @@ export default async function AdminDashboard() {
                                 <div className="text-right">
                                     <div className="text-lg font-bold text-secondary">{tour.price}</div>
                                     <Link
-                                        href={`/admin/tours/${tour.id}`}
+                                        href={`/gp-portal-2026/tours/${tour.id}`}
                                         className="text-xs text-primary font-bold hover:underline"
                                     >
                                         Edit Details
@@ -110,7 +110,7 @@ export default async function AdminDashboard() {
                 <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] backdrop-blur-xl overflow-hidden flex flex-col">
                     <div className="p-8 border-b border-white/5 flex items-center justify-between">
                         <h2 className="text-xl font-bold text-white">Recent Inquiries</h2>
-                        <Link href="/admin/inquiries" className="text-primary text-sm font-semibold hover:underline">View All</Link>
+                        <Link href="/gp-portal-2026/inquiries" className="text-primary text-sm font-semibold hover:underline">View All</Link>
                     </div>
                     <div className="divide-y divide-white/5 flex-grow">
                         {recentInquiries.length > 0 ? recentInquiries.map((inq: any) => (

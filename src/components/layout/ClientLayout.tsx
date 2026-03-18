@@ -14,7 +14,7 @@ export default function ClientLayout({
     const pathname = usePathname();
 
     // Hide Navbar, Footer, and FloatingButtons on admin and login pages
-    const isAdminPage = pathname?.startsWith("/admin");
+    const isAdminPage = pathname?.startsWith("/gp-portal-2026");
     const isLoginPage = pathname === "/login";
     const shouldHide = isAdminPage || isLoginPage;
 

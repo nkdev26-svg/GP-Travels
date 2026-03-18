@@ -41,7 +41,7 @@ export default async function ManageCarsPage({
                     <h1 className="text-4xl font-black text-white tracking-tight mb-2">Manage Fleet</h1>
                     <p className="text-slate-400">View, edit, and manage all your tour vehicles.</p>
                 </div>
-                <Button href="/admin/cars/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
+                <Button href="/gp-portal-2026/cars/new" className="h-14 px-8 rounded-2xl gap-3 shadow-xl shadow-primary/20">
                     <Plus className="w-6 h-6" />
                     Add New Vehicle
                 </Button>
@@ -102,7 +102,7 @@ export default async function ManageCarsPage({
                                     <td className="p-6 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <Link
-                                                href={`/admin/cars/${car.id}`}
+                                                href={`/gp-portal-2026/cars/${car.id}`}
                                                 className="p-2.5 rounded-xl bg-white/5 text-slate-400 hover:text-primary hover:bg-primary/10 transition-all"
                                                 title="Edit Vehicle"
                                             >
@@ -136,7 +136,7 @@ export default async function ManageCarsPage({
                         <p className="text-slate-500 max-w-xs mx-auto mb-8">
                             Start adding vehicles to show them on your website.
                         </p>
-                        <Button href="/admin/cars/new" variant="outline" className="h-12 border-primary/20 text-primary">
+                        <Button href="/gp-portal-2026/cars/new" variant="outline" className="h-12 border-primary/20 text-primary">
                             Add First Vehicle
                         </Button>
                     </div>

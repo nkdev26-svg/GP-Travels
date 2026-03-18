@@ -24,7 +24,8 @@ export const HeroSection = ({ settings }: HeroSectionProps) => {
                     src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
                     alt="Travel Background"
                     fill
-                    className="object-cover scale-105"
+                    className="object-cover object-[35%_center] md:object-center scale-100 transition-opacity duration-700"
+                    sizes="100vw"
                     priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-background" />

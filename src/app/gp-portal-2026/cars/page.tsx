@@ -8,7 +8,7 @@ import {
     Trash2,
     ExternalLink,
     Car as CarIcon,
-    DollarSign
+    IndianRupee
 } from 'lucide-react';
 import { prisma } from '@/lib/db';
 import { Button } from '@/components/ui/Button';
@@ -89,7 +89,7 @@ export default async function ManageCarsPage({
                                     <td className="p-6">
                                         {car.hourlyPrice ? (
                                             <div className="font-bold text-secondary text-lg flex items-center gap-1">
-                                                <DollarSign className="w-4 h-4" />
+                                                <IndianRupee className="w-4 h-4" />
                                                 {car.hourlyPrice}
                                             </div>
                                         ) : (

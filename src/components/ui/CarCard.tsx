@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Car as CarIcon, DollarSign, Phone, MessageCircle, Info } from 'lucide-react';
+import { Car as CarIcon, IndianRupee, Phone, MessageCircle, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Car } from '@prisma/client';
 import { logContactClick } from '@/lib/actions';
@@ -37,7 +37,7 @@ export const CarCard = ({ car, settings }: CarCardProps) => {
                 {car.hourlyPrice && (
                     <div className="absolute top-6 right-6">
                         <span className="bg-primary px-5 py-2 rounded-2xl text-xs font-black text-white shadow-xl shadow-primary/20 flex items-center gap-2">
-                            <DollarSign className="w-3.5 h-3.5" />
+                            <IndianRupee className="w-3.5 h-3.5" />
                             {car.hourlyPrice}
                         </span>
                     </div>

@@ -9,7 +9,7 @@ import {
     Image as ImageIcon,
     Info,
     Clock,
-    DollarSign,
+    IndianRupee,
     CheckCircle2,
     Upload,
     Link as LinkIcon,
@@ -103,7 +103,7 @@ export default function CarForm({ car }: CarFormProps) {
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-slate-400 uppercase tracking-tighter">Hourly Price (Optional)</label>
                                 <div className="relative">
-                                    <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
+                                    <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
                                     <input
                                         name="hourly-price"
                                         type="text"

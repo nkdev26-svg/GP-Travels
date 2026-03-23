@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
-
 import { Search, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
-export const revalidate = 3600;
 import { TourCard } from '@/components/ui/TourCard';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { prisma } from '@/lib/db';
 import { getSiteSettings } from '@/lib/settings';
 import { CONTACT_INFO } from '@/lib/data';
 import { SectionSkeleton } from '@/components/ui/Skeletons';
+
+export const revalidate = 3600;
 
 async function ToursContent({ search }: { search?: string }) {
     const tours = await prisma.tour.findMany({
@@ -18,7 +18,8 @@ async function ToursContent({ search }: { search?: string }) {
                 { description: { contains: search, mode: 'insensitive' } },
             ],
         } : {},
-        orderBy: { createdAt: 'desc' }
+        orderBy: { createdAt: 'desc' },
+        take: 100
     });
 
     return (

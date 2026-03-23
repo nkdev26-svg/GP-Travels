@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ShieldCheck, Zap, Globe2, HeadphonesIcon } from 'lucide-react';
 
 const FEATURES = [
@@ -83,10 +84,12 @@ export const WhyChooseUs = () => {
                         className="relative"
                     >
                         <div className="aspect-square relative rounded-[3rem] overflow-hidden">
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2070&auto=format&fit=crop"
                                 alt="Happy Travelers"
-                                className="object-cover w-full h-full"
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                         </div>

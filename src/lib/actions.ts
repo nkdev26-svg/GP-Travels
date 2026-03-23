@@ -11,6 +11,7 @@ import { z } from "zod";
 import crypto from "crypto";
 import { sendResetEmail } from "./notifications";
 import { supabase } from "./supabase";
+import { checkRateLimit } from "./ratelimit";
 
 // --- Validation Schemas ---
 
@@ -75,7 +76,8 @@ async function saveFile(file: File): Promise<string> {
             const bytes = await file.arrayBuffer();
             const buffer = Buffer.from(bytes);
             
-            const filename = `${Date.now()}-${file.name.replace(/[^\w.-]/g, "-")}`;
+            const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]/g, "-");
+            const filename = `${Date.now()}-${safeName}`;
             const { data, error } = await supabase.storage
                 .from("uploads")
                 .upload(filename, buffer, {
@@ -118,7 +120,8 @@ async function saveFile(file: File): Promise<string> {
         await mkdir(uploadDir, { recursive: true });
     } catch (e) { /* ignore */ }
 
-    const filename = `${Date.now()}-${file.name.replace(/[^\w.-]/g, "-")}`;
+    const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]/g, "-");
+    const filename = `${Date.now()}-${safeName}`;
     const path = join(uploadDir, filename);
 
     await writeFile(path, buffer);
@@ -213,6 +216,12 @@ export async function deleteTour(id: string) {
 }
 
 export async function createInquiry(formData: FormData) {
+    // 10 requests per hour strictly (Rate Limiting)
+    const clientIp = formData.get("name")?.toString() || "unknown"; // Fallback as strict IP isn't available from FormData directly in actions. In real-world, pass headers from client or middleware.
+    if (!checkRateLimit(`inquiry_${clientIp}`, 10, 60 * 60 * 1000)) {
+        return { success: false, error: "You are submitting forms too quickly. Try again later." };
+    }
+
     const data = {
         name: formData.get("name") as string,
         phone: formData.get("phone") as string,
@@ -262,14 +271,15 @@ export async function deleteInquiry(id: string) {
 export async function updateSiteSettings(settings: Record<string, string>) {
     await checkAuth();
 
-    const promises = Object.entries(settings).map(([key, value]) =>
-        prisma.siteSettings.upsert({
-            where: { key },
-            update: { value },
-            create: { key, value }
-        })
+    await prisma.$transaction(
+        Object.entries(settings).map(([key, value]) =>
+            prisma.siteSettings.upsert({
+                where: { key },
+                update: { value },
+                create: { key, value }
+            })
+        )
     );
-    await Promise.all(promises);
     revalidatePath("/");
     revalidatePath("/contact");
     revalidatePath("/layout");
@@ -422,6 +432,11 @@ export async function requestPasswordReset(formData: FormData) {
 
     if (!identifier) throw new Error("Please enter your email or username");
 
+    // 5 attempts per 15 minutes (Rate Limiting)
+    if (!checkRateLimit(`reset_${identifier}`, 5, 15 * 60 * 1000)) {
+        throw new Error("Too many reset attempts. Please wait 15 minutes.");
+    }
+
     // 1. Check if user is registered (Admin Registration First logic)
     const user = await prisma.user.findFirst({
         where: {
@@ -438,19 +453,20 @@ export async function requestPasswordReset(formData: FormData) {
     }
 
     // 2. Generate secure token
-    const token = crypto.randomBytes(32).toString("hex");
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
     await prisma.passwordResetToken.create({
         data: {
-            token,
+            token: hashedToken,
             userId: user.id,
             expiresAt
         }
     });
 
     // 3. Send notification
-    const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password/${token}`;
+    const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password/${rawToken}`;
     
     // Send to Email (Free via Gmail)
     await sendResetEmail(user.email, resetUrl);
@@ -467,8 +483,9 @@ export async function resetPassword(formData: FormData) {
     if (password.length < 8) throw new Error("Password must be at least 8 characters");
 
     // 1. Verify token
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
     const resetToken = await prisma.passwordResetToken.findUnique({
-        where: { token }
+        where: { token: hashedToken }
     });
 
     if (!resetToken || resetToken.expiresAt < new Date()) {
@@ -494,13 +511,22 @@ export async function resetPassword(formData: FormData) {
 
 export async function registerAdmin(formData: FormData) {
     const username = formData.get("username") as string;
+
+    // 5 attempts per IP/username per hour
+    if (!checkRateLimit(`admin_reg_${username}`, 5, 60 * 60 * 1000)) {
+        throw new Error("Too many registration attempts. Please wait an hour.");
+    }
+
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
     const registrationKey = formData.get("registrationKey") as string;
 
     // Security: Verify registration key
-    const serverKey = process.env.ADMIN_REGISTRATION_KEY || "tourkey123";
+    const serverKey = process.env.ADMIN_REGISTRATION_KEY;
+    if (!serverKey) {
+        throw new Error("Server misconfiguration: Registration key is not set.");
+    }
     if (registrationKey !== serverKey) {
         throw new Error("Invalid Administration Key. You are not authorized to create an account.");
     }

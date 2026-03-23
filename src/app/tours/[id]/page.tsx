@@ -15,6 +15,30 @@ import {
 import { prisma } from '@/lib/db';
 import { Button } from '@/components/ui/Button';
 import { CONTACT_INFO } from '@/lib/data';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const tour = await prisma.tour.findUnique({
+        where: { id },
+    });
+
+    if (!tour) {
+        return {
+            title: 'Tour Not Found',
+        };
+    }
+
+    return {
+        title: `${tour.title} | GP Travels`,
+        description: tour.description.substring(0, 160),
+        openGraph: {
+            title: `${tour.title} | GP Travels`,
+            description: tour.description.substring(0, 160),
+            images: [tour.image],
+        },
+    };
+}
 
 export default async function TourDetailPage({
     params,

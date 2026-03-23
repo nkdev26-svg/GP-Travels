@@ -19,7 +19,8 @@ async function CarsContent({ search }: { search?: string }) {
                     { details: { contains: search, mode: 'insensitive' } },
                 ],
             } : {},
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: 'desc' },
+            take: 100
         }),
         getSiteSettings()
     ]);

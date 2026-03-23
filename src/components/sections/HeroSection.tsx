@@ -112,7 +112,7 @@ export const HeroSection = ({ settings }: HeroSectionProps) => {
                         {[
                             { label: "Happy Customers", value: "10k+", icon: <Users className="w-5 h-5 text-blue-400" />, glow: "bg-blue-400/30" },
                             { label: "Amazing Tours", value: "500+", icon: <MapPin className="w-5 h-5 text-emerald-400" />, glow: "bg-emerald-400/30" },
-                            { label: "Countries", value: "30+", icon: <Globe className="w-5 h-5 text-purple-400" />, glow: "bg-purple-400/30" },
+                            { label: "Places", value: "30+", icon: <Globe className="w-5 h-5 text-purple-400" />, glow: "bg-purple-400/30" },
                             { label: "Trust Rating", value: "4.9/5", icon: <Star className="w-5 h-5 text-orange-400" />, glow: "bg-orange-400/30" }
                         ].map((stat, i) => (
                             <motion.div
